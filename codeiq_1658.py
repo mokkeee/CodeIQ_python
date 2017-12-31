@@ -35,9 +35,9 @@ names_20to90 = {
     80: 'Eighty',
     90: 'Ninety'}
 
-words = [
-
-    'Billion']
+thousand = 10 ** 3
+million = 10 ** 6
+billion = 10 ** 9
 
 
 def english_name_words(_number):
@@ -56,35 +56,35 @@ def english_name_words(_number):
         remain_under10 = _number % 10
         if remain_under10 > 0:
             yield names_1to9[remain_under10]
-    elif _number < 1000:
+    elif _number < thousand:
         yield names_1to9[int(_number / 100)]
         yield 'Hundred'
         remain_under100 = _number % 100
         if remain_under100 > 0:
             for word in english_name_words(remain_under100):
                 yield word
-    elif _number < 1000 ** 2:
-        number_1000 = int(_number / 1000)
-        number_under1000 = _number % 1000
-        for word in english_name_words(number_1000):
+    elif _number < million:
+        number_over1000 = int(_number / thousand)
+        number_under1000 = _number % thousand
+        for word in english_name_words(number_over1000):
             yield word
         yield 'Thousand'
         if number_under1000 > 0:
             for word in english_name_words(number_under1000):
                 yield word
-    elif _number < 1000 ** 3:
-        number_million = int(_number / (1000 ** 2))
-        number_under_million = _number % (1000 ** 2)
-        for word in english_name_words(number_million):
+    elif _number < billion:
+        number_over_million = int(_number / million)
+        number_under_million = _number % million
+        for word in english_name_words(number_over_million):
             yield word
         yield 'Million'
         if number_under_million > 0:
             for word in english_name_words(number_under_million):
                 yield word
     else:
-        number_billion = int(_number / (1000 ** 3))
+        number_over_billion = int(_number / (1000 ** 3))
         number_under_billion = _number % (1000 ** 3)
-        for word in english_name_words(number_billion):
+        for word in english_name_words(number_over_billion):
             yield word
         yield 'Billion'
         if number_under_billion > 0:
