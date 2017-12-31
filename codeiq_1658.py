@@ -82,8 +82,8 @@ def english_name_words(_number):
             for word in english_name_words(number_under_million):
                 yield word
     else:
-        number_over_billion = int(_number / (1000 ** 3))
-        number_under_billion = _number % (1000 ** 3)
+        number_over_billion = int(_number / billion)
+        number_under_billion = _number % billion
         for word in english_name_words(number_over_billion):
             yield word
         yield 'Billion'
