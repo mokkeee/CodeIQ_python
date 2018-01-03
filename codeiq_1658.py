@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-names_1to9 = {
+NAMES_1to9 = {
     1: 'One',
     2: 'Two',
     3: 'Three',
@@ -13,7 +13,7 @@ names_1to9 = {
     8: 'Eight',
     9: 'Nine'}
 
-names_10to19 = {
+NAMES_10to19 = {
     10: 'Ten',
     11: 'Eleven',
     12: 'Twelve',
@@ -25,7 +25,7 @@ names_10to19 = {
     19: 'Nineteen',
     18: 'Eighteen'}
 
-names_20to90 = {
+NAMES_20to90 = {
     20: 'Twenty',
     30: 'Thirty',
     40: 'Forty',
@@ -35,9 +35,11 @@ names_20to90 = {
     80: 'Eighty',
     90: 'Ninety'}
 
-thousand = 10 ** 3
-million = 10 ** 6
-billion = 10 ** 9
+THOUSAND = 10 ** 3
+MILLION = 10 ** 6
+BILLION = 10 ** 9
+
+MAX_32BIT = 0x7fffffff
 
 
 def english_name_words(_number):
@@ -48,37 +50,37 @@ def english_name_words(_number):
     if _number == 0:
         yield 'Zero'
     elif _number < 10:
-        yield names_1to9[_number]
+        yield NAMES_1to9[_number]
     elif _number < 20:
-        yield names_10to19[_number]
+        yield NAMES_10to19[_number]
     elif _number < 100:
-        yield names_20to90[int(_number / 10) * 10]
+        yield NAMES_20to90[int(_number / 10) * 10]
         remain_under10 = _number % 10
         if remain_under10 > 0:
-            yield names_1to9[remain_under10]
-    elif _number < thousand:
-        yield names_1to9[int(_number / 100)]
+            yield NAMES_1to9[remain_under10]
+    elif _number < THOUSAND:
+        yield NAMES_1to9[int(_number / 100)]
         yield 'Hundred'
         remain_under100 = _number % 100
         if remain_under100 > 0:
             yield from english_name_words(remain_under100)
-    elif _number < million:
-        number_over1000 = int(_number / thousand)
-        number_under1000 = _number % thousand
+    elif _number < MILLION:
+        number_over1000 = int(_number / THOUSAND)
+        number_under1000 = _number % THOUSAND
         yield from english_name_words(number_over1000)
         yield 'Thousand'
         if number_under1000 > 0:
             yield from english_name_words(number_under1000)
-    elif _number < billion:
-        number_over_million = int(_number / million)
-        number_under_million = _number % million
+    elif _number < BILLION:
+        number_over_million = int(_number / MILLION)
+        number_under_million = _number % MILLION
         yield from english_name_words(number_over_million)
         yield 'Million'
         if number_under_million > 0:
             yield from english_name_words(number_under_million)
-    elif _number <= 0x7fffffff:
-        number_over_billion = int(_number / billion)
-        number_under_billion = _number % billion
+    elif _number <= MAX_32BIT:
+        number_over_billion = int(_number / BILLION)
+        number_under_billion = _number % BILLION
         yield from english_name_words(number_over_billion)
         yield 'Billion'
         if number_under_billion > 0:
