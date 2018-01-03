@@ -61,35 +61,30 @@ def english_name_words(_number):
         yield 'Hundred'
         remain_under100 = _number % 100
         if remain_under100 > 0:
-            for word in english_name_words(remain_under100):
-                yield word
+            yield from english_name_words(remain_under100)
     elif _number < million:
         number_over1000 = int(_number / thousand)
         number_under1000 = _number % thousand
-        for word in english_name_words(number_over1000):
-            yield word
+        yield from english_name_words(number_over1000)
         yield 'Thousand'
         if number_under1000 > 0:
-            for word in english_name_words(number_under1000):
-                yield word
+            yield from english_name_words(number_under1000)
     elif _number < billion:
         number_over_million = int(_number / million)
         number_under_million = _number % million
-        for word in english_name_words(number_over_million):
-            yield word
+        yield from english_name_words(number_over_million)
         yield 'Million'
         if number_under_million > 0:
-            for word in english_name_words(number_under_million):
-                yield word
-    else:
+            yield from english_name_words(number_under_million)
+    elif _number <= 0x7fffffff:
         number_over_billion = int(_number / billion)
         number_under_billion = _number % billion
-        for word in english_name_words(number_over_billion):
-            yield word
+        yield from english_name_words(number_over_billion)
         yield 'Billion'
         if number_under_billion > 0:
-            for word in english_name_words(number_under_billion):
-                yield word
+            yield from english_name_words(number_under_billion)
+    else:
+        raise NotImplementedError()
 
 
 def to_english_number(_number):
