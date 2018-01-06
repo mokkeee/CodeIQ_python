@@ -110,8 +110,8 @@ def get_min_step_count(_start, _goal, _routes):
             if points[_next].cost > next_cost:
                 points[_next].cost = next_cost
 
-    for v in sorted(points.values(), key=lambda n: n.name):
-        print(v)
+    # for v in sorted(points.values(), key=lambda n: n.name):
+    #     print(v)
     return points[_goal].cost
 
 
